@@ -4,7 +4,7 @@ build:
 company:
   message: "Company Service Api welcome"
   contactDetails:
-    name: "ssss"
+    name: "ssss22"
     email: "2222"
   onCallSupport:
     - "4544"
