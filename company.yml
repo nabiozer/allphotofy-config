@@ -1,0 +1,12 @@
+build:
+  version: "d1.0"
+
+company:
+  message: "Company Service Api welcome"
+  contactDetails:
+    name: "ssss"
+    email: "2222"
+  onCallSupport:
+    - "4544"
+    - "4444"
+

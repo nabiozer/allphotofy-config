@@ -1,0 +1,87 @@
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  application:
+    name: "authentication"
+  profiles:
+    active: "prod"
+build:
+  version: ${BUILD_VERSION:"d1.0"}
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5660}/${DB_NAME:allphotofy}
+    username: ${DB_USERNAME:allphotofy}
+    password: ${DB_PASSWORD:allphotofy}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        globally_quoted_identifiers: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    datatype:
+      hibernate5:
+        force-lazy-loading: false
+    properties:
+      jackson:
+        mapper:
+          PROPAGATE_TRANSIENT_MARKER: false
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:seninemail@gmail.com}
+    password: ${SPRING_MAIL_PASSWORD:app-password-buraya}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: false
+
+jwt:
+  secret: ${JWT_SECRET:bXktc2VjcmV0LWtleS1taW5pbXVtLTUxMi1iaXQtbG9uZy1mb3ItaHM1MTItYWxnb3JpdGhtLWNoYW5nZS1pbi1wcm9kdWN0aW9u}
+  access-token-expiration: 900000        # 15 dakika
+  refresh-token-expiration: 604800000    # 7 gün
+  issuer: springauthapi
+  audience: springauthapi-client
+
+password-reset:
+  token-expiration: 1800000              # 30 dakika
+
+email:
+  from: ${EMAIL_FROM:noreply@springauthapi.com}
+  from-name: ${EMAIL_FROM_NAME:Spring Auth API}
+  enabled: ${EMAIL_ENABLED:false}        # Email gönderimini simulate et
+
+
+  error:
+    whitelabel:
+      enabled: false
+    include-message: always
+    include-stacktrace: never
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.example.springauthapi: DEBUG
+    org.springframework.security: DEBUG

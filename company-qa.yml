@@ -1,0 +1,10 @@
+build:
+  version: "q1.0"
+company:
+  message: "qa Company Service Api welcom"
+  contactDetails:
+    name: "ssss"
+    email: "2222"
+  onCallSupport:
+    - "4544"
+    - "4444"
