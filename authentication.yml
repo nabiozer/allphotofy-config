@@ -3,8 +3,6 @@ server:
 spring:
   application:
     name: "authentication"
-  profiles:
-    active: "prod"
 build:
   version: ${BUILD_VERSION:"d1.0"}
   datasource:
