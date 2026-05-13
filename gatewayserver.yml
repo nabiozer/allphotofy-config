@@ -14,7 +14,7 @@ spring:
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
           routes:
         - id: company-route
           uri: lb://COMPANY
