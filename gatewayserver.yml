@@ -1,0 +1,34 @@
+server:
+  port: 8072
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: "http://localhost:8070/eureka/"
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: company-route
+          uri: lb://COMPANY
+          predicates:
+            - Path=/company/**
+          filters:
+            - StripPrefix=1
+        - id: catalog-route
+          uri: lb://CATALOG
+          predicates:
+            - Path=/catalog/**
+          filters:
+            - StripPrefix=1
+        - id: authentication-route
+          uri: lb://AUTHENTICATION
+          predicates:
+            - Path=/authentication/**
+          filters:
+            - StripPrefix=1
