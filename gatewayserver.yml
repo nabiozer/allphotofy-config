@@ -13,7 +13,9 @@ eureka:
 spring:
   cloud:
     gateway:
-      routes:
+      server:
+        webmvc:
+          routes:
         - id: company-route
           uri: lb://COMPANY
           predicates:
