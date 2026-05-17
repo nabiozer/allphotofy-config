@@ -22,15 +22,49 @@ spring:
                 - Path=/company/**
               filters:
                 - StripPrefix=1
+                - name: CircuitBreaker
+                  args:
+                    name: companyCircuitBreaker
+                    fallbackUri: forward:/contactSupport
             - id: catalog-route
               uri: lb://CATALOG
               predicates:
                 - Path=/catalog/**
               filters:
                 - StripPrefix=1
+                - name: CircuitBreaker
+                  args:
+                    name: catalogCircuitBreaker
+                    fallbackUri: forward:/contactSupport
+                - name: Retry
+                  args:
+                    retries: 3
+                    methods: GET
+                    backoff:
+                      firstBackoff: 100ms
+                      maxBackoff: 1000ms
+                      factor: 2
+                      basedOnPreviousValue: true
             - id: authentication-route
               uri: lb://AUTHENTICATION
               predicates:
                 - Path=/authentication/**
               filters:
                 - StripPrefix=1
+                - name: CircuitBreaker
+                  args:
+                    name: authCircuitBreaker
+                    fallbackUri: forward:/contactSupport
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 4s
